@@ -9,9 +9,21 @@
  */
 
 import { AthenaClient, GetQueryExecutionCommand, GetQueryResultsCommand, StartQueryExecutionCommand } from "@aws-sdk/client-athena";
+import { fromIni } from "@aws-sdk/credential-provider-ini";
 import { EvidenceType, TypeFidelity } from "@evidence-dev/db-commons";
 
-const client = new AthenaClient();
+// Read the profile name from environment variable AUX_PROFILE
+const profile = process.env.AUX_PROFILE;
+
+if (!profile) {
+  throw new Error("Environment variable AUX_PROFILE is not set.");
+}
+
+// Create the Athena client with assumed-role credentials from profile
+const client = new AthenaClient({
+  region: "us-east-1",
+  credentials: fromIni({ profile }),
+});
 
 export const options = {
   database: {
