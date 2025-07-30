@@ -186,7 +186,6 @@ function mapQueryResults(queryResults) {
  */
 export const getRunner = (options) => {
   return async (queryText, queryPath) => {
-    console.log(queryPath)
     const params = {
       QueryString: queryText,
       QueryExecutionContext: {
@@ -203,19 +202,13 @@ export const getRunner = (options) => {
       const response = await client.send(command);
       const queryExecutionId = response.QueryExecutionId;
 
-      console.log('Query started with ID:', queryExecutionId);
-
       // Wait for query to complete
       await waitForQueryCompletion(queryExecutionId);
 
       const queryResults = await getQueryResults(queryExecutionId);
 
-      console.log('Query completed successfully:', queryExecutionId);
-
       // Map the query results to the desired format
       const output = mapQueryResults(queryResults);
-
-      console.log('Mapped query results:', output);
 
       for (const row of output.rows) {
         for (const column of output.columnTypes) {
