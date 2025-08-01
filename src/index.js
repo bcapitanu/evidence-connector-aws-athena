@@ -113,14 +113,13 @@ const mapAthenaTypeToEvidenceType = column => {
     case 'smallint':
     case 'int':
     case 'integer':
+    case 'bigint':
     case 'double':
     case 'float':
     case 'real':
       type = EvidenceType.NUMBER;
       break;
-    case 'bigint':
-      type = EvidenceType.BIGINT;
-      break;
+
     case 'date':
     case 'timestamp':
       type = EvidenceType.DATE;
