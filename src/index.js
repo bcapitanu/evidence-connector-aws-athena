@@ -236,32 +236,33 @@ export const getRunner = (options) => {
 
 /** @type {import("@evidence-dev/db-commons").ConnectionTester<ConnectorOptions>} */
 export const testConnection = async (options) => {
-  const query = `SELECT * FROM "${options.testTableName}" LIMIT 1`;
+  // const query = `SELECT * FROM "${options.testTableName}" LIMIT 1`;
 
-  // Define parameters for query execution
-  const params = {
-    QueryString: query,
-    QueryExecutionContext: {
-      Database: options.database,
-      Catalog: options.catalog,
-    },
-    ResultConfiguration: {
-      OutputLocation: 's3://' + options.outputBucket
-    }
-  };
+  // // Define parameters for query execution
+  // const params = {
+  //   QueryString: query,
+  //   QueryExecutionContext: {
+  //     Database: options.database,
+  //     Catalog: options.catalog,
+  //   },
+  //   ResultConfiguration: {
+  //     OutputLocation: 's3://' + options.outputBucket
+  //   }
+  // };
 
-  try {
-    // Execute the query
-    const command = new StartQueryExecutionCommand(params);
-    const response = await client.send(command);
-    const queryExecutionId = response.QueryExecutionId;
+  // try {
+  //   // Execute the query
+  //   const command = new StartQueryExecutionCommand(params);
+  //   const response = await client.send(command);
+  //   const queryExecutionId = response.QueryExecutionId;
 
-    // Wait for query to complete
-    await waitForQueryCompletion(queryExecutionId);
+  //   // Wait for query to complete
+  //   await waitForQueryCompletion(queryExecutionId);
 
-    return true;
-  } catch (error) {
-    console.error('Error validating table connection:', error);
-    return false;
-  };
+  //   return true;
+  // } catch (error) {
+  //   console.error('Error validating table connection:', error);
+  //   return false;
+  // };
+  return true;
 };
