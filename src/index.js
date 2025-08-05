@@ -14,6 +14,7 @@ import { EvidenceType, TypeFidelity } from "@evidence-dev/db-commons";
 
 // Read the profile name from environment variable AUX_PROFILE
 const profile = process.env.AUX_PROFILE;
+const debug = process.env.ATHENA_CONNECTOR_DEBUG === 'true' || process.env.ATHENA_CONNECTOR_DEBUG === '1';
 
 if (!profile) {
   throw new Error("Environment variable AUX_PROFILE is not set.");
@@ -197,6 +198,10 @@ export const getRunner = (options) => {
         OutputLocation: 's3://' + options.outputBucket
       }
     };
+
+    if (debug) {
+      console.log('connection options', params);
+    }
 
     try {
       const command = new StartQueryExecutionCommand(params);
