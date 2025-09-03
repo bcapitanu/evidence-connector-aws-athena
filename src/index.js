@@ -105,6 +105,10 @@ async function getQueryResults(queryExecutionId) {
 
 const mapAthenaTypeToEvidenceType = column => {
   let type;
+  if (debug) {
+    console.log('Mapping Athena type to Evidence type:', column);
+    console.log('Column type:', column.Type);
+  }
   switch (column.Type) {
     case 'boolean':
       type = EvidenceType.BOOLEAN;
