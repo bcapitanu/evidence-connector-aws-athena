@@ -179,6 +179,16 @@ function mapQueryResults(queryResults) {
   return output;
 }
 
+function parseBoolean(val) {
+  if (typeof val === 'boolean') {
+    return val; // already a boolean
+  }
+  if (val === undefined || val === null) {
+    return null; // Athena NULL
+  }
+  return String(val).toLowerCase() === 'true';
+}
+
 /**
  * Implementing this function creates a "simple" connector
  *
@@ -223,8 +233,14 @@ export const getRunner = (options) => {
         for (const column of output.columnTypes) {
 					if (column.evidenceType === 'date') {
 						row[column.name] = new Date(row[column.name]);
+					} else if (column.evidenceType === 'boolean') {
+						row[column.name] = parseBoolean(row[column.name]);
 					}
-				}
+        }
+      }
+
+      if (debug) {
+        console.log('Query output:', output);
       }
 
       return output
