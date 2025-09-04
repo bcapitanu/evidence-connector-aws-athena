@@ -105,10 +105,6 @@ async function getQueryResults(queryExecutionId) {
 
 const mapAthenaTypeToEvidenceType = column => {
   let type;
-  if (debug) {
-    console.log('Mapping Athena type to Evidence type:', column);
-    console.log('Column type:', column.Type);
-  }
   switch (column.Type) {
     case 'boolean':
       type = EvidenceType.BOOLEAN;
@@ -234,9 +230,9 @@ export const getRunner = (options) => {
 					if (column.evidenceType === 'date') {
 						row[column.name] = new Date(row[column.name]);
 					} 
-          // else if (column.evidenceType === 'boolean') {
-					// 	row[column.name] = parseBoolean(row[column.name]);
-					// }
+          else if (column.evidenceType === 'boolean') {
+						row[column.name] = parseBoolean(row[column.name]);
+					}
         }
       }
 
