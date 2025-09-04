@@ -233,9 +233,10 @@ export const getRunner = (options) => {
         for (const column of output.columnTypes) {
 					if (column.evidenceType === 'date') {
 						row[column.name] = new Date(row[column.name]);
-					} else if (column.evidenceType === 'boolean') {
-						row[column.name] = parseBoolean(row[column.name]);
-					}
+					} 
+          // else if (column.evidenceType === 'boolean') {
+					// 	row[column.name] = parseBoolean(row[column.name]);
+					// }
         }
       }
 
