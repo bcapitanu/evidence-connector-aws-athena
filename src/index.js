@@ -122,6 +122,7 @@ const mapAthenaTypeToEvidenceType = column => {
 
     case 'date':
     case 'timestamp':
+    case 'timestamp with time zone':
       type = EvidenceType.DATE;
       break;
     case 'string':
@@ -156,10 +157,9 @@ function mapQueryResults(queryResults) {
   const rows = queryResults.rows.slice(1); // Exclude header row
 
   if (debug) {
-    console.log('Columns:', columns);
-    console.log('First 5 Rows:', rows.slice(0, 5));
+    console.log('Athena Columns:', columns);
   }
-  
+
   const mappedRows = rows.map(row => {
     const mappedRow = {};
     row.Data.forEach((data, index) => {
@@ -230,10 +230,6 @@ export const getRunner = (options) => {
       // Map the query results to the desired format
       const output = mapQueryResults(queryResults);
 
-      if (debug) {
-        console.log('Pre-transform output:', output);
-      }
-
       for (const row of output.rows) {
         for (const column of output.columnTypes) {
 					if (column.evidenceType === 'date') {
@@ -246,7 +242,7 @@ export const getRunner = (options) => {
       }
 
       if (debug) {
-        console.log('Mapped output:', output);
+        console.log('Output:', output);
       }
 
       return output
