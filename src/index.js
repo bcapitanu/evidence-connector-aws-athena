@@ -225,6 +225,10 @@ export const getRunner = (options) => {
       // Map the query results to the desired format
       const output = mapQueryResults(queryResults);
 
+      if (debug) {
+        console.log('Pre-transform output:', output);
+      }
+
       for (const row of output.rows) {
         for (const column of output.columnTypes) {
 					if (column.evidenceType === 'date') {
@@ -237,7 +241,7 @@ export const getRunner = (options) => {
       }
 
       if (debug) {
-        console.log('Query output:', output);
+        console.log('Mapped output:', output);
       }
 
       return output
