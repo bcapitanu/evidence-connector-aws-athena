@@ -155,6 +155,11 @@ function mapQueryResults(queryResults) {
   const columns = queryResults.resultSetMetadata.ColumnInfo;
   const rows = queryResults.rows.slice(1); // Exclude header row
 
+  if (debug) {
+    console.log('Columns:', columns);
+    console.log('First 5 Rows:', rows.slice(0, 5));
+  }
+  
   const mappedRows = rows.map(row => {
     const mappedRow = {};
     row.Data.forEach((data, index) => {
